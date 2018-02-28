@@ -2,51 +2,57 @@
 
     <b>dcowgill/thrift-compat</b>
 
-    verifies some forward and backward compatibility properties
+    Verifies some forward and backward compatibility properties
     of the thrift protocol, in multiple languages, with a focus
-    on properties that are not made explicit in the thrift docs
+    on properties that are not made explicit in the thrift docs.
 
     N.B. uses thrift 0.11.0
 
-    <b>why</b>
+    <b>Why</b>
 
-    • can you add values to or remove values from an enum?
-      what about unions? googling is surprisingly unhelpful
+    • Can you add values to or remove values from an enum?
+      what about unions? Googling is surprisingly unhelpful.
 
-    • generated thrift clients in different languages behave
-      differently, so it's dangerous assume based on any one
+    • Generated thrift clients in various languages sometimes
+      behave differently, so it's dangerous to make assumptions
+      based on any single one.
 
-    <b>installation</b>
+    <b>Installation</b>
 
-    first: <a href="https://golang.org/dl/">install go</a> if you don't have it
+    First: <a href="https://golang.org/dl/">install go</a> if you don't have it.
 
     $ go get github.com/dcowgill/thrift-compat
     $ cd $GOPATH/github.com/dcowgill/thrift-compat
     $ make
 
-    <b>language support</b>
+    <b>Language Support</b>
 
-    just go and ruby for now
+    Just Go and Ruby for now.
 
-    <b>conclusions</b>
+    <b>Conclusions</b>
 
-    assuming the normal rules of thrift compatibility are
-    obeyed, like not reusing a numbered field
+    Assuming the normal rules of thrift compatibility are
+    obeyed, such as not reusing a numbered field:
 
-    • forward compatible (vN+1 can read vN):
+    • forward compatible (version N+1 can read version N):
       adding to enums, unions
+      <strike>removing from enums or unions</strike>
 
-    • backward compatible (vN can read vN+1):
-      removing from enums, unions
+    • backward compatible (version N can read version N+1):
+      <strike>adding to enums or unions</strike>
+      removing from enums or unions
 
-    note that this differs from the usual thrift promise,
-    where adding fields to a thing is typically ok
+    In other words, modifying enums or unions is generally
+    <i>not</i> a compatible change.
 
-    also note:
+    Note that this differs from the usual thrift promise,
+    where adding fields to a thing is typically ok.
 
-    the generated go client will not raise errors when
+    Also note:
+
+    The generated go client will not raise errors when
     decoding a value that uses a non-existent union field
     or a non-existent enum value, so extra care must be
-    taken to validate decoded objects
+    taken to validate decoded objects.
 
 </pre>
